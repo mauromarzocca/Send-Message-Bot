@@ -6,38 +6,38 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import datetime
 import pytz
 
-# Nome del tuo canale Telegram
-channel_id = "@ID Canale"
+# Your Telegram channel name
+channel_id = "@Channel_ID"
 
-# Messaggi da inviare ogni giorno della settimana
+# Messages to be sent every day of the week
 messages = {
-    "Monday": "Oggi è Lunedì",
-    "Tuesday": "Oggi è Martedì",
-    "Wednesday": "Oggi è Mercoledì",
-    "Thursday": "Oggi è Giovedì",
-    "Friday": "Oggi è Venerdì",
-    "Saturday": "Oggi è Sabato",
-    "Sunday": "Oggi è Domenica",
+    "Monday": "Today is Monday",
+    "Tuesday": "Today is Tuesday",
+    "Wednesday": "Today is Wednesday",
+    "Thursday": "Today is Thursday",
+    "Friday": "Today is Friday",
+    "Saturday": "Today is Saturday",
+    "Sunday": "Today is Sunday",
 }
 
-# Inizializza il bot
-bot = Bot(token="ID Bot Telegram")
+# Initialize the bot
+bot = Bot(token="Telegram_Bot_ID")
 router = Router()
 dp = Dispatcher()
 
-# Funzione per inviare il messaggio
+# Function to send the message
 async def send_scheduled_message():
-    day_of_week = datetime.datetime.now(pytz.timezone("Europe/Rome")).strftime("%A")
-    message = messages.get(day_of_week, "Messaggio di default")
+    day_of_week = datetime.datetime.now(pytz.timezone("UTC")).strftime("%A")
+    message = messages.get(day_of_week, "Default Message")
     await bot.send_message(chat_id=channel_id, text=message)
 
-# Aggiungi un comando per verificare che il bot funzioni
+# Add a command to verify the bot is working
 @router.message(Command("start"))
 async def start_handler(message: Message):
-    await message.answer("Ciao! Il bot è attivo e funzionante.")
+    await message.answer("Hello! The bot is up and running.")
 
-# Configura lo scheduler
-scheduler = AsyncIOScheduler(timezone="Europe/Rome")
+# Configure the scheduler
+scheduler = AsyncIOScheduler(timezone="UTC")
 scheduler.add_job(send_scheduled_message, "cron", day_of_week="mon-sun", hour=19, minute=0)
 
 async def main():
