@@ -16,8 +16,7 @@ This Python script utilizes the `aiogram` and `apscheduler` libraries to send sc
 Before running the script, make sure to install the following dependencies:
 
 ```bash
-pip install aiogram==2.23.1
-pip install apscheduler
+pip install aiogram==3.17 apscheduler pytz
 ```
 
 ## Configuration
